@@ -1,19 +1,27 @@
 #pragma once
 #include <iostream>
 #include <string>
-enum class Color
+namespace filenames
 {
-    white,
-    black
+    std::string const DIR = "chessBoardConfig/";
+    std::string const DEFALT_CONFIG = DIR + "standard.pos";
+    std::string const ONLY_KING = DIR + "onlyking.pos";
+
+} // namespace filenames
+
+enum class Color : char
+{
+    white = 'w',
+    black = 'b'
 };
 enum class PieceType : char
 {
-    king = 'k',
-    rook = 'r',
-    bishop = 'b',
-    queen = 'q',
-    knight = 'n',
-    pawn = 'p'
+    king = 'K',
+    rook = 'R',
+    bishop = 'B',
+    queen = 'Q',
+    knight = 'N',
+    pawn = 'P'
 };
 
 std::ostream &operator<<(std::ostream &out, Color color);
