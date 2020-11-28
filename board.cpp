@@ -18,8 +18,7 @@ void Board::setBoard(std::string const &fileName)
         auto color = static_cast<Color>(tokens[0][0]);         // Note tokens[0] is a string of length 1.
         auto pieceType = static_cast<PieceType>(tokens[1][0]); // Similarly.
         std::for_each(tokens.begin() + 2, tokens.end(), [&](auto const &posStr) {
-            Coor coor = convertPos(posStr);
-            board[coor.y][coor.x] = createPiece(color, pieceType);
+            (*this)[posStr] = createPiece(color, pieceType);
         });
     }
 }
@@ -51,4 +50,22 @@ std::ostream &operator<<(std::ostream &out, Board const &board)
     out << " |A |B |C |D |E |F |G |H |\n";
 
     return out;
+}
+/* ----Accessors---- */
+std::unique_ptr<Piece> const &Board::operator[](Coor const &coor) const
+{
+    return board[coor.y][coor.x];
+}
+
+std::unique_ptr<Piece> &Board::operator[](Coor const &coor)
+{
+    return board[coor.y][coor.x];
+}
+std::unique_ptr<Piece> const &Board::operator[](std::string const &posStr) const
+{
+    return (*this)[convertPos(posStr)];
+}
+std::unique_ptr<Piece> &Board::operator[](std::string const &posStr)
+{
+    return (*this)[convertPos(posStr)];
 }

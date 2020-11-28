@@ -15,6 +15,12 @@ public:
     This way is more flexible as we can have different initial positions to 
     debug. */
     void setBoard(std::string const &fileName = filenames::DEFALT_CONFIG);
+    /* Accessor, provide a valid coordinate (Coor object or a valid string)
+    x, y pair, returns a const reference or reference. */
+    std::unique_ptr<Piece> const &operator[](Coor const &coor) const;
+    std::unique_ptr<Piece> &operator[](Coor const &coor);
+    std::unique_ptr<Piece> const &operator[](std::string const &posStr) const;
+    std::unique_ptr<Piece> &operator[](std::string const &posStr);
     Board(std::string const &fileName = filenames::DEFALT_CONFIG);
     friend std::ostream &operator<<(std::ostream &out, Board const &board);
 };
