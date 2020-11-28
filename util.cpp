@@ -8,7 +8,7 @@ std::ostream &operator<<(std::ostream &out, Color color)
         out << "White";
         break;
     case Color::black:
-        out << "black";
+        out << "Black";
         break;
     }
     return out;

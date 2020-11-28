@@ -38,7 +38,8 @@ std::ostream &operator<<(std::ostream &out, Board const &board)
             if (p)
             {
 
-                out << static_cast<char>(p->color) << static_cast<char>(p->pieceType) << '|';
+                out << static_cast<char>(p->getColor())
+                    << static_cast<char>(p->getPieceType()) << '|';
             }
             else
             {

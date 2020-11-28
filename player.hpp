@@ -9,9 +9,12 @@ class Player
     Color color;
     bool inCheck = false;
     std::string kingPos;
+    Player *opponent;
+    /* Helper function determining if there is any piece in between.
+    Smartly defines the word 'Between' according to the piece type at start position. */
+    bool pieceInBetween(Board const &board, std::string const &start, std::string const &end) const;
 
 public:
-    Player *opponent;
     /* Set the color and the initial kingPos of this player accordingly. */
     Player(Color color);
     /* Do NOT free the opponent. */
@@ -19,8 +22,9 @@ public:
     /* Do not copy player. */
     Player(Player const &) = delete;
     Player &operator=(Player const &) = delete;
+    Player *getOpponent() const;
     /* Check the validity of the move without modifying the board. */
-    bool validMove(Board const &board, std::string const &start, std::string const &end) const;
+    bool validMove(Board &board, std::string const &start, std::string const &end) const;
     /* Assume the move is valid and change the board and kingPos as appropriate.
     Return a pointer to the captured piece if there is a capture otherwide nullptr.  */
     std::unique_ptr<Piece> makeMove(Board &board, std::string const &start, std::string const &end) const;

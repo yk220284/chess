@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+
 namespace filenames
 {
     std::string const DIR = "chessBoardConfig/";

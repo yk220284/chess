@@ -18,15 +18,25 @@ std::unique_ptr<Piece> createPiece(Color color, PieceType pieceType)
         return std::make_unique<Pawn>(color, pieceType);
     }
 }
+/* Const accessor to color and pieceType. */
+Color const &Piece::getColor()
+{
+    return color;
+}
+PieceType const &Piece::getPieceType()
+{
+    return pieceType;
+}
+
 /*----------King----------*/
-bool King::validMove(std::string const &start, std::string const &end) { return true; }
+std::unique_ptr<std::vector<Coor>> King::findPath(std::string const &start, std::string const &end) { return true; }
 /*----------Pawn----------*/
-bool Pawn::validMove(std::string const &start, std::string const &end) { return true; }
+std::unique_ptr<std::vector<Coor>> Pawn::findPath(std::string const &start, std::string const &end) { return true; }
 /*----------Knight----------*/
-bool Knight::validMove(std::string const &start, std::string const &end) { return true; }
+std::unique_ptr<std::vector<Coor>> Knight::findPath(std::string const &start, std::string const &end) { return true; }
 /*----------Rook----------*/
-bool Rook::validMove(std::string const &start, std::string const &end) { return true; }
+std::unique_ptr<std::vector<Coor>> Rook::findPath(std::string const &start, std::string const &end) { return true; }
 /*----------Bishop----------*/
-bool Bishop::validMove(std::string const &start, std::string const &end) { return true; }
+std::unique_ptr<std::vector<Coor>> Bishop::findPath(std::string const &start, std::string const &end) { return true; }
 /*----------Queen----------*/
-bool Queen::validMove(std::string const &start, std::string const &end) { return true; }
+std::unique_ptr<std::vector<Coor>> Queen::findPath(std::string const &start, std::string const &end) { return true; }
