@@ -6,17 +6,22 @@ using namespace std;
 
 int main()
 {
-    /* ----Test Board----*/
-    Board bd(filenames::DEFALT_CONFIG);
-    Board bd1(filenames::ONLY_KING);
-    cout << bd;
-    cout << bd1;
-
-    // cout << bd1;
-    /* ----Test Player----*/
     Player whitePlayer(Color::white);
-    whitePlayer.validMove(bd1, "A1", "A2"); // No piece at E2.
-    whitePlayer.validMove(bd1, "E8", "E3"); // try to move a black piece.
-    whitePlayer.validMove(bd1, "E1", "E2"); // try to capture own piece.
-    whitePlayer.validMove(bd1, "E1", "E8"); // crazy move.
+    Player blackPlayer(Color::black);
+    whitePlayer.getOpponent() = &blackPlayer;
+    blackPlayer.getOpponent() = &whitePlayer;
+
+    /* ----Test Piece---- */
+    Board bd2(filenames::TEST_ROOK);
+    cout << bd2;
+    whitePlayer.submitMove(bd2, "A1", "A9");
+    whitePlayer.submitMove(bd2, "A1", "A3");
+    whitePlayer.submitMove(bd2, "A1", "B2");
+    whitePlayer.submitMove(bd2, "A1asdfsdf", "B2");
+    whitePlayer.submitMove(bd2, "E9", "B2");
+    whitePlayer.submitMove(bd2, "A1", "A4");
+    /* ----Test In check---- */
+    Board bd3(filenames::IN_CHECK);
+    cout << bd3;
+    whitePlayer.submitMove(bd3, "A2", "B2");
 }

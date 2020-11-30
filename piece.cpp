@@ -29,14 +29,44 @@ PieceType const &Piece::getPieceType()
 }
 
 /*----------King----------*/
-std::unique_ptr<std::vector<Coor>> King::findPath(std::string const &start, std::string const &end) { return true; }
+Piece::Path King::findPath(std::string const &start, std::string const &end) {}
+std::vector<Coor> King::potentialEndPositions(std::string const &start) {}
 /*----------Pawn----------*/
-std::unique_ptr<std::vector<Coor>> Pawn::findPath(std::string const &start, std::string const &end) { return true; }
+Piece::Path Pawn::findPath(std::string const &start, std::string const &end) {}
+std::vector<Coor> Pawn::potentialEndPositions(std::string const &start) {}
 /*----------Knight----------*/
-std::unique_ptr<std::vector<Coor>> Knight::findPath(std::string const &start, std::string const &end) { return true; }
+Piece::Path Knight::findPath(std::string const &start, std::string const &end) {}
+std::vector<Coor> Knight::potentialEndPositions(std::string const &start) {}
 /*----------Rook----------*/
-std::unique_ptr<std::vector<Coor>> Rook::findPath(std::string const &start, std::string const &end) { return true; }
+Piece::Path Rook::findPath(std::string const &start, std::string const &end)
+{
+    Coor startCoor{start};
+    Coor endCoor{end};
+    if (!(startCoor.withInBoard() && endCoor.withInBoard()))
+    {
+        std::cerr << "Encounter an invalid coordinate\n";
+    }
+    Path path{nullptr};
+    if (startCoor.x == endCoor.x)
+    {
+        path = std::make_unique<std::vector<Coor>>();
+        for (int y = startCoor.y + 1; y < endCoor.y; y++)
+        {
+            path->emplace_back(Coor(startCoor.x, y));
+        }
+    }
+    if (startCoor.y == endCoor.y)
+    {
+        path = std::make_unique<std::vector<Coor>>();
+    }
+    return path;
+}
+std::vector<Coor> Rook::potentialEndPositions(std::string const &start)
+{
+}
 /*----------Bishop----------*/
-std::unique_ptr<std::vector<Coor>> Bishop::findPath(std::string const &start, std::string const &end) { return true; }
+Piece::Path Bishop::findPath(std::string const &start, std::string const &end) {}
+std::vector<Coor> Bishop::potentialEndPositions(std::string const &start) {}
 /*----------Queen----------*/
-std::unique_ptr<std::vector<Coor>> Queen::findPath(std::string const &start, std::string const &end) { return true; }
+Piece::Path Queen::findPath(std::string const &start, std::string const &end) {}
+std::vector<Coor> Queen::potentialEndPositions(std::string const &start) {}

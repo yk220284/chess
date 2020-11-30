@@ -64,9 +64,9 @@ std::unique_ptr<Piece> &Board::operator[](Coor const &coor)
 }
 std::unique_ptr<Piece> const &Board::operator[](std::string const &posStr) const
 {
-    return (*this)[convertPos(posStr)];
+    return (*this)[Coor(posStr)];
 }
 std::unique_ptr<Piece> &Board::operator[](std::string const &posStr)
 {
-    return (*this)[convertPos(posStr)];
+    return (*this)[Coor(posStr)];
 }

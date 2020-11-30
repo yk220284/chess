@@ -39,14 +39,34 @@ std::ostream &operator<<(std::ostream &out, PieceType type)
     }
     return out;
 }
-
 Coor::Coor(int x, int y) : x(x), y(y) {}
-Coor convertPos(std::string const &posStr)
+Coor::Coor() : Coor(8, 8) {} // Given no coordinates provided, both initialied to illegal values.
+Coor::Coor(std::string const &posStr) : Coor(posStr[0] - 'A', posStr[1] - '1') {}
+bool Coor::withInBoard() const
 {
-    return Coor(posStr[0] - 'A', posStr[1] - '1');
+    return (x >= 0) && (x < 8) && (y >= 0) && (y < 8);
+}
+std::string Coor::str() const
+{
+    return std::string({static_cast<char>('A' + x), static_cast<char>('1' + y)});
 }
 std::ostream &operator<<(std::ostream &out, Coor coor)
 {
-    out << 'A' + coor.x << '1' + coor.y;
+    out << coor.str();
     return out;
+}
+bool validPosStr(std::string const &posStr)
+{
+    if (posStr.size() != 2)
+    {
+        std::cerr << "Input position " << posStr << " has length not equal to 2\n";
+        return false;
+    }
+    Coor coor{posStr};
+    if (!coor.withInBoard())
+    {
+        std::cerr << "Input position " << posStr << " is not a valid position on board\n";
+        return false;
+    }
+    return true;
 }
