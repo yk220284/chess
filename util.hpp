@@ -54,7 +54,11 @@ struct Coor
     explicit Coor(std::string const &posStr);
     bool withInBoard() const;
     std::string str() const;
-    friend std::ostream &operator<<(std::ostream &out, Coor coor);
+    friend std::ostream &operator<<(std::ostream &out, Coor const &coor);
+    friend Coor operator+(Coor const &lhs, Coor const &rhs);
+    friend bool operator==(Coor const &lhs, Coor const &rhs);
+    friend bool operator!=(Coor const &lhs, Coor const &rhs);
+    Coor &operator+=(Coor const &rhs);
 };
 /* Check if string posStr represents a valid position on board. */
 bool validPosStr(std::string const &posStr);

@@ -8,8 +8,13 @@ class Piece
     Color color;
     PieceType pieceType;
 
-public:
+protected:
+    // Helper function that return one of the 8 directions required
+    // to travel from start to end. (not useful for Knights.)
+    Coor findDirection(Coor const &start, Coor const &end);
     typedef std::unique_ptr<std::vector<Coor>> Path;
+
+public:
     Piece() = default;
     Piece(Color const &color, PieceType const &pieceType) : color(color), pieceType(pieceType) {}
     virtual ~Piece() = default;
@@ -59,6 +64,8 @@ public:
 /*----------Rook----------*/
 class Rook : virtual public Piece
 {
+    std::vector<Coor> directions = {Coor(0, 1), Coor(1, 0), Coor(-1, 0), Coor(0, -1)};
+
 public:
     Rook() = default;
     Rook(Color const &color, PieceType const &pieceType) : Piece(color, pieceType){};
@@ -84,5 +91,5 @@ public:
     Queen(Color const &color, PieceType const &pieceType) : Piece(color, pieceType) {}
     ~Queen() = default;
     Path findPath(std::string const &start, std::string const &end) override;
-    std::vector<Coor> potentialEndPositions(std::string const &start);
+    std::vector<Coor> potentialEndPositions(std::string const &start) override;
 };

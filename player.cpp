@@ -209,6 +209,7 @@ bool Player::isInCheck(Board &board)
 
 bool Player::isInCheckMate(Board &board)
 {
+    // UNTESTED!!!!!!!
     if (!inCheck)
     {
         return false;
@@ -220,12 +221,12 @@ bool Player::isInCheckMate(Board &board)
             auto const &piece = board[Coor(x, y)];
             if (piece)
             {
-                auto potentialEnd = piece->potentialEndPositions(Coor(x, y).str());
-                auto it = std::find_if(potentialEnd.begin(), potentialEnd.end(), [&](Coor const &end) {
+                auto potentialEnds = piece->potentialEndPositions(Coor(x, y).str());
+                auto it = std::find_if(potentialEnds.begin(), potentialEnds.end(), [&](Coor const &end) {
                     InvalidMove err_code = validateMove(board, Coor(x, y).str(), end.str());
                     return err_code == InvalidMove::NO_ERROR;
                 });
-                if (it != potentialEnd.end())
+                if (it != potentialEnds.end())
                 {
                     return false;
                 }

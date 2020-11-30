@@ -1,4 +1,5 @@
 #include "piece.hpp"
+#include <algorithm>
 /*----------Piece----------*/
 std::unique_ptr<Piece> createPiece(Color color, PieceType pieceType)
 {
@@ -27,7 +28,24 @@ PieceType const &Piece::getPieceType()
 {
     return pieceType;
 }
-
+Coor Piece::findDirection(Coor const &start, Coor const &end)
+{
+    auto dir = [](int s, int e) {
+        if (s < e)
+        {
+            return 1;
+        }
+        else if (s == e)
+        {
+            return 0;
+        }
+        else // s > e
+        {
+            return -1;
+        }
+    };
+    return Coor(dir(start.x, end.x), dir(start.y, end.y));
+}
 /*----------King----------*/
 Piece::Path King::findPath(std::string const &start, std::string const &end) {}
 std::vector<Coor> King::potentialEndPositions(std::string const &start) {}
@@ -40,29 +58,35 @@ std::vector<Coor> Knight::potentialEndPositions(std::string const &start) {}
 /*----------Rook----------*/
 Piece::Path Rook::findPath(std::string const &start, std::string const &end)
 {
-    Coor startCoor{start};
-    Coor endCoor{end};
-    if (!(startCoor.withInBoard() && endCoor.withInBoard()))
-    {
-        std::cerr << "Encounter an invalid coordinate\n";
-    }
+    Coor const startCoor{start};
+    Coor const endCoor{end};
     Path path{nullptr};
-    if (startCoor.x == endCoor.x)
+    auto direction = findDirection(startCoor, endCoor);
+    if (std::find(directions.begin(), directions.end(), direction) != directions.end())
     {
         path = std::make_unique<std::vector<Coor>>();
-        for (int y = startCoor.y + 1; y < endCoor.y; y++)
+        auto curCoor = startCoor + direction;
+        while (curCoor != endCoor)
         {
-            path->emplace_back(Coor(startCoor.x, y));
+            path->emplace_back(curCoor);
+            curCoor += direction;
         }
-    }
-    if (startCoor.y == endCoor.y)
-    {
-        path = std::make_unique<std::vector<Coor>>();
     }
     return path;
 }
 std::vector<Coor> Rook::potentialEndPositions(std::string const &start)
 {
+    std::vector<Coor> positions;
+    Coor const startCoor(start);
+    std::for_each(directions.begin(), directions.end(), [&positions, &startCoor](auto const &direction) {
+        auto curCoor = startCoor + direction;
+        while (curCoor.withInBoard())
+        {
+            positions.emplace_back(curCoor);
+            curCoor += direction;
+        }
+    });
+    return positions;
 }
 /*----------Bishop----------*/
 Piece::Path Bishop::findPath(std::string const &start, std::string const &end) {}

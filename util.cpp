@@ -50,7 +50,7 @@ std::string Coor::str() const
 {
     return std::string({static_cast<char>('A' + x), static_cast<char>('1' + y)});
 }
-std::ostream &operator<<(std::ostream &out, Coor coor)
+std::ostream &operator<<(std::ostream &out, Coor const &coor)
 {
     out << coor.str();
     return out;
@@ -69,4 +69,25 @@ bool validPosStr(std::string const &posStr)
         return false;
     }
     return true;
+}
+Coor operator+(Coor const &lhs, Coor const &rhs)
+{
+    auto rlt = lhs;
+    rlt.x += rhs.x;
+    rlt.y += rhs.y;
+    return rlt;
+}
+Coor &Coor::operator+=(Coor const &rhs)
+{
+    this->x += rhs.x;
+    this->y += rhs.y;
+    return *this;
+}
+bool operator==(Coor const &lhs, Coor const &rhs)
+{
+    return lhs.x == rhs.x && lhs.y == rhs.y;
+}
+bool operator!=(Coor const &lhs, Coor const &rhs)
+{
+    return !(lhs == rhs);
 }
