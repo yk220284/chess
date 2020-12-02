@@ -135,7 +135,10 @@ bool Player::submitMove(Board &board, std::string const &start, std::string cons
             {
                 // Won the game.
                 std::cout << opponent->getColor() << " is in checkmate\n";
+                return true;
             }
+            // Opponent in check.
+            std::cout << opponent->getColor() << " is in check\n";
         }
         return true;
     }
@@ -211,26 +214,26 @@ bool Player::isInCheck(Board &board)
 
 bool Player::isInCheckMate(Board &board)
 {
-    // UNTESTED!!!!!!!
     if (!inCheck)
     {
         return false;
     }
+    // Try all movements of all my pieces see if there is at least 1 valid move.
     for (int x = 0; x < 8; x++)
     {
         for (int y = 0; y < 8; y++)
         {
             auto const &piece = board[Coor(x, y)];
-            if (piece)
+            if (piece && piece->getColor() == color)
             {
                 auto potentialEnds = piece->potentialEndPositions(Coor(x, y).str());
-                auto it = std::find_if(potentialEnds.begin(), potentialEnds.end(), [&](Coor const &end) {
-                    InvalidMove err_code = validateMove(board, Coor(x, y).str(), end.str());
-                    return err_code == InvalidMove::NO_ERROR;
-                });
-                if (it != potentialEnds.end())
+                for (auto const &end : potentialEnds)
                 {
-                    return false;
+                    // Exists at least 1 valid move for me.
+                    if (validateMove(board, Coor(x, y).str(), end.str()) == InvalidMove::NO_ERROR)
+                    {
+                        return false;
+                    }
                 }
             }
         }

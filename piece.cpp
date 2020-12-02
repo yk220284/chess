@@ -62,7 +62,13 @@ Piece::Path King::findPath(std::string const &start, std::string const &end)
 }
 std::vector<Coor> King::potentialEndPositions(std::string const &start)
 {
-    return directions;
+    Coor const startCoor{start};
+    std::vector<Coor> positions;
+    for (auto const &direction : directions)
+    {
+        positions.emplace_back(direction + startCoor);
+    }
+    return positions;
 }
 /*--------------------------Pawn--------------------------*/
 Piece::Path Pawn::findPath(std::string const &start, std::string const &end) {}
