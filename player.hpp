@@ -1,9 +1,9 @@
-#pragma once
 #include <utility>
 #include "util.hpp"
 #include "board.hpp"
 /* first being a x position, second being a y position. */
 
+#pragma once
 class Player
 {
     Color color;

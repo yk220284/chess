@@ -82,6 +82,7 @@ InvalidMove Player::validateMove(Board &board, std::string const &start, std::st
         return InvalidMove::SELF_IN_CHECK;
     }
     // 0. no error :-)
+    moveBack(board, start, end, capturedPiece);
     return InvalidMove::NO_ERROR;
 }
 /* ---- print error message ---- */
@@ -92,6 +93,7 @@ void printError(InvalidMove invalidMove, Board const &board, std::string const &
     case InvalidMove::NO_ERROR:
         break;
     case InvalidMove::INVALID_POS:
+        std::cerr << start << " or " << end << " is not a valid position on board\n";
         break;
     case InvalidMove::NO_PIECE:
         std::cerr << "There is no piece at position " << start << "!\n";
@@ -169,23 +171,23 @@ void Player::moveBack(Board &board, std::string const &start, std::string const 
 /* ----update check status---- */
 std::string const &Player::locateKing(Board const &board)
 {
-    if (!kingPos.empty())
+    if (kingPos.empty())
     {
-        return kingPos;
-    }
-    for (int x = 0; x < 8; x++)
-    {
-        for (int y = 0; y < 8; y++)
+        for (int x = 0; x < 8; x++)
         {
-            if (board[Coor(x, y)] &&
-                (board[Coor(x, y)]->getPieceType() == PieceType::king) &&
-                (board[Coor(x, y)]->getColor() == color))
+            for (int y = 0; y < 8; y++)
             {
-                kingPos = Coor(x, y).str();
-                return kingPos;
+                if (board[Coor(x, y)] &&
+                    (board[Coor(x, y)]->getPieceType() == PieceType::king) &&
+                    (board[Coor(x, y)]->getColor() == color))
+                {
+                    kingPos = Coor(x, y).str();
+                    return kingPos;
+                }
             }
         }
     }
+    return kingPos;
 }
 bool Player::isInCheck(Board &board)
 {

@@ -1,6 +1,6 @@
 #include "piece.hpp"
 #include <algorithm>
-/*----------Piece----------*/
+/*--------------------------Piece--------------------------*/
 std::unique_ptr<Piece> createPiece(Color color, PieceType pieceType)
 {
     switch (pieceType)
@@ -19,7 +19,6 @@ std::unique_ptr<Piece> createPiece(Color color, PieceType pieceType)
         return std::make_unique<Pawn>(color, pieceType);
     }
 }
-/* Const accessor to color and pieceType. */
 Color const &Piece::getColor()
 {
     return color;
@@ -46,16 +45,33 @@ Coor Piece::findDirection(Coor const &start, Coor const &end)
     };
     return Coor(dir(start.x, end.x), dir(start.y, end.y));
 }
-/*----------King----------*/
-Piece::Path King::findPath(std::string const &start, std::string const &end) {}
-std::vector<Coor> King::potentialEndPositions(std::string const &start) {}
-/*----------Pawn----------*/
+/*--------------------------King--------------------------*/
+std::vector<Coor> const King::directions =
+    {Coor(0, 1), Coor(1, 0), Coor(0, -1), Coor(-1, 0),
+     Coor(1, 1), Coor(1, -1), Coor(-1, -1), Coor(-1, 1)};
+Piece::Path King::findPath(std::string const &start, std::string const &end)
+{
+    Coor const startCoor{start};
+    Coor const endCoor{end};
+    Path path{nullptr};
+    if (abs(endCoor.x - startCoor.x) <= 1 && abs(endCoor.y - startCoor.y) <= 1)
+    {
+        path = std::make_unique<std::vector<Coor>>();
+    }
+    return path;
+}
+std::vector<Coor> King::potentialEndPositions(std::string const &start)
+{
+    return directions;
+}
+/*--------------------------Pawn--------------------------*/
 Piece::Path Pawn::findPath(std::string const &start, std::string const &end) {}
 std::vector<Coor> Pawn::potentialEndPositions(std::string const &start) {}
-/*----------Knight----------*/
+/*--------------------------Knight--------------------------*/
 Piece::Path Knight::findPath(std::string const &start, std::string const &end) {}
 std::vector<Coor> Knight::potentialEndPositions(std::string const &start) {}
-/*----------Rook----------*/
+/*--------------------------Rook--------------------------*/
+std::vector<Coor> const Rook::directions = {Coor(0, 1), Coor(1, 0), Coor(-1, 0), Coor(0, -1)};
 Piece::Path Rook::findPath(std::string const &start, std::string const &end)
 {
     Coor const startCoor{start};
@@ -88,9 +104,9 @@ std::vector<Coor> Rook::potentialEndPositions(std::string const &start)
     });
     return positions;
 }
-/*----------Bishop----------*/
+/*--------------------------Bishop--------------------------*/
 Piece::Path Bishop::findPath(std::string const &start, std::string const &end) {}
 std::vector<Coor> Bishop::potentialEndPositions(std::string const &start) {}
-/*----------Queen----------*/
+/*--------------------------Queen--------------------------*/
 Piece::Path Queen::findPath(std::string const &start, std::string const &end) {}
 std::vector<Coor> Queen::potentialEndPositions(std::string const &start) {}

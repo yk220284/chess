@@ -1,5 +1,6 @@
 #include "util.hpp"
 
+/* ----Piece/Player Color---- */
 std::ostream &operator<<(std::ostream &out, Color color)
 {
     switch (color)
@@ -14,6 +15,7 @@ std::ostream &operator<<(std::ostream &out, Color color)
     return out;
 }
 
+/* ----Piece Type---- */
 std::ostream &operator<<(std::ostream &out, PieceType type)
 {
     switch (type)
@@ -39,6 +41,8 @@ std::ostream &operator<<(std::ostream &out, PieceType type)
     }
     return out;
 }
+
+/* ----Coordinates on Board---- */
 Coor::Coor(int x, int y) : x(x), y(y) {}
 Coor::Coor() : Coor(8, 8) {} // Given no coordinates provided, both initialied to illegal values.
 Coor::Coor(std::string const &posStr) : Coor(posStr[0] - 'A', posStr[1] - '1') {}
@@ -59,13 +63,12 @@ bool validPosStr(std::string const &posStr)
 {
     if (posStr.size() != 2)
     {
-        std::cerr << "Input position " << posStr << " has length not equal to 2\n";
+        // Invalid length.
         return false;
     }
     Coor coor{posStr};
     if (!coor.withInBoard())
     {
-        std::cerr << "Input position " << posStr << " is not a valid position on board\n";
         return false;
     }
     return true;
