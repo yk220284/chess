@@ -23,7 +23,8 @@ enum class InvalidMove : int
     ILLEGAL_PIECE_MOVE,
     BLOCK,
     CAPTURE_OWN,
-    SELF_IN_CHECK
+    SELF_IN_CHECK,
+    INVALID_CASTLE
 };
 
 /* ----Piece/Player Color---- */
@@ -61,6 +62,9 @@ struct Coor
     friend Coor operator+(Coor const &lhs, Coor const &rhs);
     friend bool operator==(Coor const &lhs, Coor const &rhs);
     friend bool operator!=(Coor const &lhs, Coor const &rhs);
+    // Helper function that return one of the 8 directions required
+    // to travel from start to end. (not useful for Knights.)
+    friend Coor findDirection(Coor const &start, Coor const &end);
     Coor &operator+=(Coor const &rhs);
 };
 // Check if string posStr represents a valid position on board.

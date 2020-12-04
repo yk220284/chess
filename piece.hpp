@@ -11,9 +11,6 @@ class Piece
     bool moved = false;
 
 protected:
-    // Helper function that return one of the 8 directions required
-    // to travel from start to end. (not useful for Knights.)
-    Coor findDirection(Coor const &start, Coor const &end);
     typedef std::unique_ptr<std::vector<Coor>> Path;
 
 public:

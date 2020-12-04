@@ -94,3 +94,21 @@ bool operator!=(Coor const &lhs, Coor const &rhs)
 {
     return !(lhs == rhs);
 }
+Coor findDirection(Coor const &start, Coor const &end)
+{
+    auto dir = [](int s, int e) {
+        if (s < e)
+        {
+            return 1;
+        }
+        else if (s == e)
+        {
+            return 0;
+        }
+        else // s > e
+        {
+            return -1;
+        }
+    };
+    return Coor(dir(start.x, end.x), dir(start.y, end.y));
+}
