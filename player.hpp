@@ -33,9 +33,9 @@ public:
     /* Check the validity of the move without modifying the board, 
     return cooresponding error code. */
     InvalidMove validateMove(Board &board, std::string const &start, std::string const &end);
-    /* Assume the move is valid and change the board and kingPos as appropriate.
+    /* Assume the move is valid and change the board and kingPos as appropriate. If not hypothetical, mark the piece as moved.
     Return a pointer to the captured piece if there is a capture otherwide nullptr.  */
-    std::unique_ptr<Piece> makeMove(Board &board, std::string const &start, std::string const &end);
+    std::unique_ptr<Piece> makeMove(Board &board, std::string const &start, std::string const &end, bool hypothetical = true);
     /* Undo the makeMove by restoring the board. 
     Move the piece from end to start and put the captured piece back to end. */
     void moveBack(Board &board, std::string const &start, std::string const &end, std::unique_ptr<Piece> &capturedPiece);
@@ -47,5 +47,5 @@ public:
     /* Check all possible move to see if the game has ended or not. */
     bool isInCheckMate(Board &board);
     /* Return true if valid move then make the change on board, else return false. */
-    bool submitMove(Board &board, std::string const &start, std::string const end);
+    bool submitMove(Board &board, std::string const &start, std::string const &end);
 };

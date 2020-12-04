@@ -27,6 +27,14 @@ PieceType const &Piece::getPieceType()
 {
     return pieceType;
 }
+void Piece::markMoved()
+{
+    moved = true;
+}
+bool Piece::hasMoved() const
+{
+    return moved;
+}
 Coor Piece::findDirection(Coor const &start, Coor const &end)
 {
     auto dir = [](int s, int e) {

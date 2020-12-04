@@ -122,12 +122,20 @@ void printError(InvalidMove invalidMove, Board const &board, std::string const &
     }
 }
 /* ----submitMove---- */
-bool Player::submitMove(Board &board, std::string const &start, std::string const end)
+bool Player::submitMove(Board &board, std::string const &start, std::string const &end)
 {
     auto err_code = validateMove(board, start, end);
     if (err_code == InvalidMove::NO_ERROR)
     {
-        auto capturedPiece = makeMove(board, start, end);
+        // Make non-hypothetical move.
+        std::cout << color << "’s " << board[start]->getPieceType() << " moves from "
+                  << start << " to " << end;
+        auto capturedPiece = makeMove(board, start, end, false);
+        if (capturedPiece)
+        {
+            std::cout << " taking " << capturedPiece->getColor() << "’s " << capturedPiece->getPieceType();
+        }
+        std::cout << std::endl;
         if (opponent->isInCheck(board))
         {
             opponent->checkStatus() = true;
@@ -149,8 +157,12 @@ bool Player::submitMove(Board &board, std::string const &start, std::string cons
     }
 }
 /* ----makeMove---- */
-std::unique_ptr<Piece> Player::makeMove(Board &board, std::string const &start, std::string const &end)
+std::unique_ptr<Piece> Player::makeMove(Board &board, std::string const &start, std::string const &end, bool hypothetical)
 {
+    if (!hypothetical)
+    {
+        board[start]->markMoved();
+    }
     // Tracking our king's position.
     if (board[start]->getPieceType() == PieceType::king)
     {

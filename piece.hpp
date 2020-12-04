@@ -8,6 +8,7 @@ class Piece
 {
     Color color;
     PieceType pieceType;
+    bool moved = false;
 
 protected:
     // Helper function that return one of the 8 directions required
@@ -23,6 +24,10 @@ public:
     Color const &getColor();
     // Const accessor to pieceType.
     PieceType const &getPieceType();
+    // Mark change the member variable moved to true.
+    void markMoved();
+    // Access moved member variable.
+    bool hasMoved() const;
     // Pure virtual function must be overriden.
     // If there exits a valid path return a pointer to the vector (which may be an empty vector) specifiying
     // the path from start to end. Note path does NOT include start and end to save memory.
