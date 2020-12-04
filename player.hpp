@@ -13,6 +13,12 @@ class Player
     /* Helper function determining if there is any piece in between.
     Smartly defines the word 'Between' according to the piece type at start position. */
     std::string const &locateKing(Board const &board);
+    /* Helper functions checking if this move is a valid castle move. 
+    Here we implement castling as a movement of the King! */
+    bool isCastling(std::string const &start, std::string const &end);
+    bool validateCastleMove(Board &board, std::string const &start, std::string const &end);
+    /* Check if there is any opponent's piece that has a valid move to position coor. */
+    bool underAttack(Board &board, Coor const &coor);
 
 public:
     /* Set the color and the initial kingPos of this player accordingly. */
