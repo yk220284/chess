@@ -54,6 +54,8 @@ std::vector<Coor> King::potentialEndPositions(std::string const &start)
 {
     Coor const startCoor{start};
     std::vector<Coor> positions;
+    // Note: if you are in check, you cannot castle,
+    // so the potentialEnds don't include castle movement.
     for (auto const &direction : directions)
     {
         positions.emplace_back(direction + startCoor);

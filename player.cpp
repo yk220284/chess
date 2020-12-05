@@ -245,7 +245,7 @@ bool Player::submitMove(Board &board, std::string const &start, std::string cons
             std::cout << color << "’s " << board[rookStartCoor]->getPieceType() << " moves from "
                       << rookStartCoor << " to " << rookEndCoor
                       << " finish castling.\n";
-            makeMove(board, rookStartCoor.str(), rookEndCoor.str());
+            makeMove(board, rookStartCoor.str(), rookEndCoor.str(), false);
         }
         if (opponent->isInCheck(board))
         {
