@@ -16,6 +16,7 @@ public:
     ChessBoard(std::string const &config_file);
     /* Do not copy ChessBoard(Game). */
     ChessBoard(ChessBoard const &) = delete;
+    ~ChessBoard();
     ChessBoard &operator=(ChessBoard const &) = delete;
     void resetBoard();
     void submitMove(std::string const &start, std::string const &end);

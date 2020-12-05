@@ -3,9 +3,10 @@ ChessBoard::ChessBoard()
 {
     whitePlayer = new Player(Color::white);
     blackPlayer = new Player(Color::black);
-    whitePlayer->opponent = blackPlayer;
-    blackPlayer->opponent = whitePlayer;
+    whitePlayer->getOpponent() = blackPlayer;
+    blackPlayer->getOpponent() = whitePlayer;
     board = new Board(); // Use the defult file to set board.
+    resetBoard();
 }
 ChessBoard::ChessBoard(std::string const &config_file) : ChessBoard()
 {
@@ -20,6 +21,8 @@ ChessBoard::~ChessBoard()
 }
 void ChessBoard::resetBoard()
 {
+    std::cout << "A new chess game is started!\n";
+    whiteTurn = true;
     board->setBoard();
 }
 void ChessBoard::submitMove(std::string const &start, std::string const &end)
