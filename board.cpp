@@ -10,17 +10,25 @@ void Board::setBoard(std::string const &fileName)
 {
     board = std::array<std::array<std::unique_ptr<Piece>, 8>, 8>();
     std::ifstream infile(fileName);
-    std::string line;
-    while (std::getline(infile, line))
+    if (infile.is_open())
     {
-        std::istringstream iss{line};
-        std::vector<std::string> tokens{std::istream_iterator<std::string>{iss},
-                                        std::istream_iterator<std::string>{}};
-        auto color = static_cast<Color>(tokens[0][0]);         // Note tokens[0] is a string of length 1.
-        auto pieceType = static_cast<PieceType>(tokens[1][0]); // Similarly.
-        std::for_each(tokens.begin() + 2, tokens.end(), [&](auto const &posStr) {
-            (*this)[posStr] = createPiece(color, pieceType);
-        });
+        std::string line;
+        while (std::getline(infile, line))
+        {
+            std::istringstream iss{line};
+            std::vector<std::string> tokens{std::istream_iterator<std::string>{iss},
+                                            std::istream_iterator<std::string>{}};
+            auto color = static_cast<Color>(tokens[0][0]);         // Note tokens[0] is a string of length 1.
+            auto pieceType = static_cast<PieceType>(tokens[1][0]); // Similarly.
+            std::for_each(tokens.begin() + 2, tokens.end(), [&](auto const &posStr) {
+                (*this)[posStr] = createPiece(color, pieceType);
+            });
+        }
+        infile.close();
+    }
+    else
+    {
+        std::cerr << "Cannot open file: " << fileName << " !\n";
     }
 }
 Board::Board(std::string const &fileName)

@@ -7,9 +7,6 @@ namespace filenames
 {
     std::string const DIR = "chessBoardConfig/";
     std::string const DEFALT_CONFIG = DIR + "standard.pos";
-    std::string const ONLY_KING = DIR + "onlyking.pos";
-    std::string const TEST_ROOK = DIR + "testRook.pos";
-    std::string const IN_CHECK = DIR + "inCheck.pos";
 } // namespace filenames
 
 /* ----Invalid Move Error Code---- */
