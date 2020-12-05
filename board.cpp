@@ -8,6 +8,7 @@
 #include <algorithm>
 void Board::setBoard(std::string const &fileName)
 {
+    board = std::array<std::array<std::unique_ptr<Piece>, 8>, 8>();
     std::ifstream infile(fileName);
     std::string line;
     while (std::getline(infile, line))
