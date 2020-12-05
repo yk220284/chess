@@ -9,6 +9,9 @@ class Board
 {
     /* Smart pointers default initialise to nullptr. */
     std::array<std::array<std::unique_ptr<Piece>, 8>, 8> board;
+    /* Take a space sperated string specifiying all the positions of a piece. Place it on board. */
+    void placePiece(std::string const line);
+    std::vector<std::string> const static STANDARD_CONFIG_STR;
 
 public:
     /* Set board using a file (assuming in the right format) contains initial position of pieces.

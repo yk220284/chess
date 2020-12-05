@@ -6,6 +6,32 @@
 #include <sstream>
 #include <iterator>
 #include <algorithm>
+// If cannot read config file at all, use the following to specify the configuration.
+std::vector<std::string> const Board::STANDARD_CONFIG_STR = {
+    "w P A2 B2 C2 D2 E2 F2 G2 H2",
+    "w R A1 H1",
+    "w N B1 G1",
+    "w B C1 F1",
+    "w Q D1",
+    "w K E1",
+    "b P A7 B7 C7 D7 E7 F7 G7 H7",
+    "b R A8 H8",
+    "b N B8 G8",
+    "b B C8 F8",
+    "b Q D8 ",
+    "b K E8"};
+/* Take a space sperated string specifiying all the positions of a piece. Place it on board. */
+void Board::placePiece(std::string const line)
+{
+    std::istringstream iss{line};
+    std::vector<std::string> tokens{std::istream_iterator<std::string>{iss},
+                                    std::istream_iterator<std::string>{}};
+    auto color = static_cast<Color>(tokens[0][0]);         // Note tokens[0] is a string of length 1.
+    auto pieceType = static_cast<PieceType>(tokens[1][0]); // Similarly.
+    std::for_each(tokens.begin() + 2, tokens.end(), [&](auto const &posStr) {
+        (*this)[posStr] = createPiece(color, pieceType);
+    });
+}
 void Board::setBoard(std::string const &fileName)
 {
     board = std::array<std::array<std::unique_ptr<Piece>, 8>, 8>();
@@ -15,20 +41,17 @@ void Board::setBoard(std::string const &fileName)
         std::string line;
         while (std::getline(infile, line))
         {
-            std::istringstream iss{line};
-            std::vector<std::string> tokens{std::istream_iterator<std::string>{iss},
-                                            std::istream_iterator<std::string>{}};
-            auto color = static_cast<Color>(tokens[0][0]);         // Note tokens[0] is a string of length 1.
-            auto pieceType = static_cast<PieceType>(tokens[1][0]); // Similarly.
-            std::for_each(tokens.begin() + 2, tokens.end(), [&](auto const &posStr) {
-                (*this)[posStr] = createPiece(color, pieceType);
-            });
+            placePiece(line);
         }
         infile.close();
     }
     else
     {
-        std::cerr << "Cannot open file: " << fileName << " !\n";
+        // Cannot open file.
+        for (auto const &line : STANDARD_CONFIG_STR)
+        {
+            placePiece(line);
+        }
     }
 }
 Board::Board(std::string const &fileName)
