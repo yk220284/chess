@@ -236,7 +236,7 @@ bool Player::submitMove(Board &board, std::string const &start, std::string cons
     {
         // After a valid move, I cannot be in check.
         inCheck = false;
-        std::cout << color << "’s " << board[start]->getPieceType() << " moves from "
+        std::cout << color << "'s " << board[start]->getPieceType() << " moves from "
                   << start << " to " << end;
         auto capturedPiece = makeMove(board, start, end, false);
         if (capturedPiece)
@@ -250,7 +250,7 @@ bool Player::submitMove(Board &board, std::string const &start, std::string cons
             auto p = locateRook(start, end);
             auto const &rookStartCoor = p.first;
             auto const &rookEndCoor = p.second;
-            std::cout << color << "’s " << board[rookStartCoor]->getPieceType() << " moves from "
+            std::cout << color << "'s " << board[rookStartCoor]->getPieceType() << " moves from "
                       << rookStartCoor << " to " << rookEndCoor
                       << " finish castling.\n";
             makeMove(board, rookStartCoor.str(), rookEndCoor.str(), false);
