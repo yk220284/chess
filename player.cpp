@@ -212,7 +212,9 @@ void printError(InvalidMove invalidMove, Board const &board, std::string const &
                   << std::endl;
         break;
     case InvalidMove::BLOCK:
-        std::cerr << "There is a piece blocking the move from " << start << " to " << end << "!\n";
+        std::cerr << board[start]->getColor() << "'s " << board[start]->getPieceType()
+                  << " cannot move from " << start << " to " << end
+                  << " as there is a piece blocking in the middle!\n";
         break;
     case InvalidMove::CAPTURE_OWN:
         std::cerr << "Try to capture a " << board[end]->getColor() << ' '
