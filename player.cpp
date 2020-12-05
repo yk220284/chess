@@ -241,7 +241,7 @@ bool Player::submitMove(Board &board, std::string const &start, std::string cons
         auto capturedPiece = makeMove(board, start, end, false);
         if (capturedPiece)
         {
-            std::cout << " taking " << capturedPiece->getColor() << "’s " << capturedPiece->getPieceType();
+            std::cout << " taking " << capturedPiece->getColor() << "'s " << capturedPiece->getPieceType();
         }
         std::cout << std::endl;
         // check if it's a castling move, if so, move the cooresponding Rook.
