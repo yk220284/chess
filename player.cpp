@@ -157,21 +157,27 @@ InvalidMove Player::validateMove(Board &board, std::string const &start, std::st
     {
         return InvalidMove::BLOCK;
     }
-    // 7. the piece at the destination is your own piece.
-    // Make a hypothetical move to test if that's valid.
+    /* ---- Make a hypothetical move to test if that's valid. ---- */
     auto capturedPiece = makeMove(board, start, end);
+    // 7. the piece at the destination is your own piece.
     if (capturedPiece && (capturedPiece->getColor() == color))
     {
         moveBack(board, start, end, capturedPiece); // Undo the damage.
         return InvalidMove::CAPTURE_OWN;
     }
-    // 8. your move results in being in check yourself.
-    // Captured opponent's king, don't need to check whether I am in check anymore.
+    // 5c. Moved Pawn diagnally without capturing any piece.
+    if (!capturedPiece && path->size() == 0 && board[end]->getPieceType() == PieceType::pawn)
+    {
+        moveBack(board, start, end, capturedPiece); // Undo the damage.
+        return InvalidMove::ILLEGAL_PIECE_MOVE;
+    }
+    // 8a. Captured opponent's king, don't need to check whether I am in check anymore.
     if (capturedPiece && capturedPiece->getPieceType() == PieceType::king)
     {
         moveBack(board, start, end, capturedPiece); // Undo the damage.
         return InvalidMove::NO_ERROR;
     }
+    // 8b. your move results in being in check yourself.
     if (isInCheck(board))
     {
         moveBack(board, start, end, capturedPiece); // Undo the damage.

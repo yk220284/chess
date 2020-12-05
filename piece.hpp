@@ -10,10 +10,8 @@ class Piece
     PieceType pieceType;
     bool moved = false;
 
-protected:
-    typedef std::unique_ptr<std::vector<Coor>> Path;
-
 public:
+    typedef std::unique_ptr<std::vector<Coor>> Path;
     Piece() = default;
     Piece(Color const &color, PieceType const &pieceType) : color(color), pieceType(pieceType) {}
     virtual ~Piece() = default;
@@ -62,6 +60,8 @@ public:
 /*----------Knight----------*/
 class Knight : public Piece
 {
+    static std::vector<Coor> const directions;
+
 public:
     Knight(Color const &color, PieceType const &pieceType) : Piece(color, pieceType){};
     ~Knight() = default;
@@ -85,6 +85,8 @@ public:
 /*----------Bishop----------*/
 class Bishop : virtual public Piece
 {
+    static std::vector<Coor> const directions;
+
 public:
     Bishop() = default;
     Bishop(Color const &color, PieceType const &pieceType) : Piece(color, pieceType){};
