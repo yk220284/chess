@@ -5,7 +5,7 @@
 /* ----Configuration Files---- */
 namespace filenames
 {
-    std::string const DIR = "chessBoardConfig/";
+    std::string const DIR = "./chessBoardConfig/";
     std::string const DEFALT_CONFIG = DIR + "standard.pos";
 } // namespace filenames
 
