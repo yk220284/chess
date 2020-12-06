@@ -141,7 +141,7 @@ std::vector<Coor> Knight::potentialEndPositions(std::string const &start)
 
 /*---------------------- Helper functions for Rook & Bishop ----------------------*/
 // Assume a path exists, return the path (can be empty).
-Piece::Path pathHelper(Coor const &startCoor, Coor const &endCoor, std::vector<Coor> const &directions)
+Piece::Path pathHelper(Coor const &startCoor, Coor const &endCoor)
 {
     Piece::Path path = std::make_unique<std::vector<Coor>>();
     auto direction = findDirection(startCoor, endCoor);
@@ -180,7 +180,7 @@ Piece::Path Rook::findPath(std::string const &start, std::string const &end)
     {
         return nullptr;
     }
-    return pathHelper(startCoor, endCoor, directions);
+    return pathHelper(startCoor, endCoor);
 }
 std::vector<Coor> Rook::potentialEndPositions(std::string const &start)
 {
@@ -197,7 +197,7 @@ Piece::Path Bishop::findPath(std::string const &start, std::string const &end)
     {
         return nullptr;
     }
-    return pathHelper(startCoor, endCoor, directions);
+    return pathHelper(startCoor, endCoor);
 }
 std::vector<Coor> Bishop::potentialEndPositions(std::string const &start)
 {

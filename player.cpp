@@ -188,7 +188,7 @@ InvalidMove Player::validateMove(Board &board, std::string const &start, std::st
     return InvalidMove::NO_ERROR;
 }
 /* ---- print error message ---- */
-void printError(InvalidMove invalidMove, Board const &board, std::string const &start, std::string const end, std::ostream &out = std::cout)
+void printError(InvalidMove invalidMove, Board const &board, std::string const &start, std::string const end)
 {
     switch (invalidMove)
     {
