@@ -31,10 +31,10 @@ void ChessBoard::submitMove(std::string const &start, std::string const &end)
     {
         // If whitePlayer managed to submitMove, next turn is black player,
         // else, next turn is still whitePlayer.
-        whiteTurn = !(whitePlayer->submitMove(*board, start, end));
+        whiteTurn = (whitePlayer->submitMove(*board, start, end) != InvalidMove::NO_ERROR);
     }
     else
     {
-        whiteTurn = blackPlayer->submitMove(*board, start, end);
+        whiteTurn = (blackPlayer->submitMove(*board, start, end) == InvalidMove::NO_ERROR);
     }
 }

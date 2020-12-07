@@ -229,7 +229,7 @@ void printError(InvalidMove invalidMove, Board const &board, std::string const &
     }
 }
 /* ----submitMove---- */
-bool Player::submitMove(Board &board, std::string const &start, std::string const &end)
+InvalidMove Player::submitMove(Board &board, std::string const &start, std::string const &end)
 {
     auto err_code = validateMove(board, start, end);
     if (err_code == InvalidMove::NO_ERROR)
@@ -263,17 +263,19 @@ bool Player::submitMove(Board &board, std::string const &start, std::string cons
             {
                 // Won the game.
                 std::cout << opponent->getColor() << " is in checkmate\n";
-                return true;
             }
-            std::cout << opponent->getColor() << " is in check\n";
+            else
+            {
+                // opponents still has some valid moves.
+                std::cout << opponent->getColor() << " is in check\n";
+            }
         }
-        return true;
     }
     else
     {
         printError(err_code, board, start, end);
-        return false;
     }
+    return err_code;
 }
 /* ----makeMove---- */
 std::unique_ptr<Piece> Player::makeMove(Board &board, std::string const &start, std::string const &end, bool hypothetical)
