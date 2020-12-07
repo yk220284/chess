@@ -15,6 +15,9 @@ class Board
     void placePiece(std::string const line);
 
 public:
+    /* Do not copy board. */
+    Board(Board const &) = delete;
+    Board &operator=(Board const &) = delete;
     /* ----Configuration File Path---- */
     static std::string const DIR;
     static std::string const DEFALT_CONFIG;
