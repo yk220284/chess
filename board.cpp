@@ -7,7 +7,7 @@
 #include <iterator>
 #include <algorithm>
 /* configurations */
-std::string const Board::DIR = "./chessBoardConfig/";
+std::string const Board::DIR = "chessBoardConfig/";
 std::string const Board::DEFALT_CONFIG = DIR + "standard.pos";
 std::vector<std::string> const Board::STANDARD_CONFIG_STR = {
     "w P A2 B2 C2 D2 E2 F2 G2 H2",

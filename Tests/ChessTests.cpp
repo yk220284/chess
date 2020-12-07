@@ -4,14 +4,14 @@
 #include <iostream>
 using namespace std;
 
-TEST_CASE("Display Board Setup")
+TEST_CASE("Display Setup")
 {
     SECTION("Full board")
     {
         Board board;
         cout << board;
     }
-    SECTION("Custom Board Setup")
+    SECTION("Custom Setup")
     {
         Board board(Board::DIR + "onlyking.pos");
         cout << board;
