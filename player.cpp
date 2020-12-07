@@ -68,7 +68,6 @@ bool Player::validateCastleMove(Board &board, std::string const &start, std::str
     Coor const kingStartCoor{start};
     Coor const kingEndCoor{end};
     auto const &rookStartCoor = p.first;
-    // auto const &rookEndCoor = p.second;
     // locate two pieces.
     auto const &king = board[kingStartCoor];
     auto const &rook = board[rookStartCoor];
