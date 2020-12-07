@@ -6,13 +6,15 @@
 
 class ChessBoard
 {
-    Board *board;
+    Board board;
     Player *whitePlayer;
     Player *blackPlayer;
     bool whiteTurn = true;
 
 public:
+    /* set up a standard board. */
     ChessBoard();
+    /* use config_file to construct board. */
     ChessBoard(std::string const &config_file);
     /* Do not copy ChessBoard(Game). */
     ChessBoard(ChessBoard const &) = delete;
