@@ -28,7 +28,7 @@ add_library(game_component
         player.hpp
         player.cpp
         ChessBoard.h
-        Chessboard.cpp
+	ChessBoard.cpp
 )
 set_target_properties(game_component
 PROPERTIES
