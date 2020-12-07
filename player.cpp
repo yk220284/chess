@@ -304,7 +304,7 @@ void Player::moveBack(Board &board, std::string const &start, std::string const 
     board[end] = std::move(capturedPiece);
 }
 /* ---- Under attack ---- */
-bool Player::underAttack(Board &board, Coor const &coor)
+bool Player::underAttack(Board &board, Coor const &coor) const
 {
     for (int x = 0; x < 8; x++)
     {
