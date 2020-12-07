@@ -6,7 +6,9 @@
 #include <sstream>
 #include <iterator>
 #include <algorithm>
-// If cannot read config file at all, use the following to specify the configuration.
+/* configurations */
+std::string const Board::DIR = "./chessBoardConfig/";
+std::string const Board::DEFALT_CONFIG = DIR + "standard.pos";
 std::vector<std::string> const Board::STANDARD_CONFIG_STR = {
     "w P A2 B2 C2 D2 E2 F2 G2 H2",
     "w R A1 H1",
@@ -20,14 +22,19 @@ std::vector<std::string> const Board::STANDARD_CONFIG_STR = {
     "b B C8 F8",
     "b Q D8 ",
     "b K E8"};
-/* Take a space sperated string specifiying all the positions of a piece. Place it on board. */
+
+/* set board */
 void Board::placePiece(std::string const line)
 {
     std::istringstream iss{line};
     std::vector<std::string> tokens{std::istream_iterator<std::string>{iss},
                                     std::istream_iterator<std::string>{}};
-    auto color = static_cast<Color>(tokens[0][0]);         // Note tokens[0] is a string of length 1.
-    auto pieceType = static_cast<PieceType>(tokens[1][0]); // Similarly.
+    // Note tokens[0] is a string of length 1.
+    auto color = static_cast<Color>(tokens[0][0]);
+    // Similarly.
+    auto pieceType = static_cast<PieceType>(tokens[1][0]);
+    // The first two tokens specifiess color and pieceType,
+    // positions start from the third entry.
     std::for_each(tokens.begin() + 2, tokens.end(), [&](auto const &posStr) {
         (*this)[posStr] = createPiece(color, pieceType);
     });
@@ -36,6 +43,7 @@ void Board::setBoard(std::string const &fileName)
 {
     board = std::array<std::array<std::unique_ptr<Piece>, 8>, 8>();
     std::ifstream infile(fileName);
+    // config file exists.
     if (infile.is_open())
     {
         std::string line;
@@ -45,9 +53,9 @@ void Board::setBoard(std::string const &fileName)
         }
         infile.close();
     }
+    // Cannot open file, use standard config strings instead
     else
     {
-        // Cannot open file.
         for (auto const &line : STANDARD_CONFIG_STR)
         {
             placePiece(line);
@@ -58,6 +66,8 @@ Board::Board(std::string const &fileName)
 {
     setBoard(fileName);
 }
+
+/* print out board */
 std::ostream &operator<<(std::ostream &out, Board const &board)
 {
     out << "\n +--+--+--+--+--+--+--+--+\n";
@@ -89,7 +99,6 @@ std::unique_ptr<Piece> const &Board::operator[](Coor const &coor) const
 {
     return board[coor.y][coor.x];
 }
-
 std::unique_ptr<Piece> &Board::operator[](Coor const &coor)
 {
     return board[coor.y][coor.x];

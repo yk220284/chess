@@ -1,7 +1,6 @@
-#include "util.hpp"
 #include <memory>
 #include <vector>
-#include <array>
+#include "util.hpp"
 #pragma once
 /*----------Piece----------*/
 class Piece

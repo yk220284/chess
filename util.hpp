@@ -2,13 +2,6 @@
 #include <string>
 #pragma once
 
-/* ----Configuration Files---- */
-namespace filenames
-{
-    std::string const DIR = "./chessBoardConfig/";
-    std::string const DEFALT_CONFIG = DIR + "standard.pos";
-} // namespace filenames
-
 /* ----Invalid Move Error Code---- */
 enum class InvalidMove : int
 {
