@@ -1,0 +1,11 @@
+BasedOnStyle: llvm
+ColumnLimit: 80
+UseTab: Never
+PointerAlignment: Left
+DerivePointerAlignment: false
+SpaceBeforeParens: Never
+#ConstStyle: East
+BreakBeforeBraces: Stroustrup
+SpaceBeforeParens: ControlStatements
+IndentWidth: 4
+AccessModifierOffset: -4
