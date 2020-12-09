@@ -1,11 +1,11 @@
 #include "board.hpp"
-#include "util.hpp"
 #include "piece.hpp"
-#include <fstream>
-#include <vector>
-#include <sstream>
-#include <iterator>
+#include "util.hpp"
 #include <algorithm>
+#include <fstream>
+#include <iterator>
+#include <sstream>
+#include <vector>
 /* configurations */
 std::string const Board::DIR = "chessBoardConfig/";
 std::string const Board::DEFALT_CONFIG = DIR + "standard.pos";
@@ -33,58 +33,47 @@ void Board::placePiece(std::string const line)
     auto color = static_cast<Color>(tokens[0][0]);
     // Similarly.
     auto pieceType = static_cast<PieceType>(tokens[1][0]);
-    // The first two tokens specifiess color and pieceType,
+    // The first two tokens specifies color and pieceType,
     // positions start from the third entry.
-    std::for_each(tokens.begin() + 2, tokens.end(), [&](auto const &posStr) {
+    std::for_each(tokens.begin() + 2, tokens.end(), [&](auto const& posStr) {
         (*this)[posStr] = createPiece(color, pieceType);
     });
 }
-void Board::setBoard(std::string const &fileName)
+void Board::setBoard(std::string const& fileName)
 {
     board = std::array<std::array<std::unique_ptr<Piece>, 8>, 8>();
     std::ifstream infile(fileName);
     // config file exists.
-    if (infile.is_open())
-    {
+    if (infile.is_open()) {
         std::string line;
-        while (std::getline(infile, line))
-        {
+        while (std::getline(infile, line)) {
             placePiece(line);
         }
         infile.close();
     }
     // Cannot open file, use standard config strings instead
-    else
-    {
-        for (auto const &line : STANDARD_CONFIG_STR)
-        {
+    else {
+        for (auto const& line : STANDARD_CONFIG_STR) {
             placePiece(line);
         }
     }
 }
-Board::Board(std::string const &fileName)
-{
-    setBoard(fileName);
-}
+Board::Board(std::string const& fileName) { setBoard(fileName); }
 
 /* print out board */
-std::ostream &operator<<(std::ostream &out, Board const &board)
+std::ostream& operator<<(std::ostream& out, Board const& board)
 {
     out << "\n +--+--+--+--+--+--+--+--+\n";
-    for (int i = 7; i >= 0; i--)
-    {
-        auto const &row = board.board[i];
+    for (int i = 7; i >= 0; i--) {
+        auto const& row = board.board[i];
         out << i + 1 << '|';
-        for (auto const &p : row)
-        {
-            if (p)
-            {
+        for (auto const& p : row) {
+            if (p) {
 
                 out << static_cast<char>(p->getColor())
                     << static_cast<char>(p->getPieceType()) << '|';
             }
-            else
-            {
+            else {
                 out << "  |";
             }
         }
@@ -95,19 +84,19 @@ std::ostream &operator<<(std::ostream &out, Board const &board)
     return out;
 }
 /* ----Accessors---- */
-std::unique_ptr<Piece> const &Board::operator[](Coor const &coor) const
+std::unique_ptr<Piece> const& Board::operator[](Coor const& coor) const
 {
     return board[coor.y][coor.x];
 }
-std::unique_ptr<Piece> &Board::operator[](Coor const &coor)
+std::unique_ptr<Piece>& Board::operator[](Coor const& coor)
 {
     return board[coor.y][coor.x];
 }
-std::unique_ptr<Piece> const &Board::operator[](std::string const &posStr) const
+std::unique_ptr<Piece> const& Board::operator[](std::string const& posStr) const
 {
     return (*this)[Coor(posStr)];
 }
-std::unique_ptr<Piece> &Board::operator[](std::string const &posStr)
+std::unique_ptr<Piece>& Board::operator[](std::string const& posStr)
 {
     return (*this)[Coor(posStr)];
 }
